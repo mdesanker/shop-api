@@ -1,0 +1,19 @@
+{
+  "name": "shop-api",
+  "version": "1.0.0",
+  "description": "REST API for an e-commerce store",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdesanker/shop-api.git"
+  },
+  "author": "Michael Desanker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mdesanker/shop-api/issues"
+  },
+  "homepage": "https://github.com/mdesanker/shop-api#readme"
+}
