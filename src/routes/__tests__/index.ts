@@ -1,3 +1,5 @@
+/* istanbul ifnore file */
+
 import express, { urlencoded } from "express";
 
 // Initialize test app
