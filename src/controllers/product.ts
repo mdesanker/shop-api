@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import Product from "../models/Product";
+import { check, validationResult } from "express-validator";
+
+import Product, { ProductTypes } from "../models/Product";
 
 const getAllProducts = async (
   req: Request,
@@ -38,4 +40,41 @@ const getProduct = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getAllProducts, getProduct };
+const addProduct = [
+  // Validate and sanitize input
+  check("name", "Name is required").trim().notEmpty(),
+  check("price", "Price is required").trim().isNumeric().notEmpty(),
+  check("description", "Description is required").trim().notEmpty(),
+
+  // Process input
+  async (req: Request, res: Response, next: NextFunction) => {
+    // Handle validation errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      // Create new product
+      const { name, price, description } = req.body;
+
+      const product = new Product<ProductTypes>({
+        name,
+        price,
+        description,
+      });
+
+      await product.save();
+
+      return res.json(product);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message);
+        return res.status(500).send("Server error");
+      }
+    }
+  },
+];
+
+export default { getAllProducts, getProduct, addProduct };

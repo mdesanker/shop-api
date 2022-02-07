@@ -58,8 +58,8 @@ describe("POST /product/create", () => {
     });
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty("title");
-    expect(res.body.title).toEqual("New product");
+    expect(res.body).toHaveProperty("name");
+    expect(res.body.name).toEqual("New product");
     expect(res.body).toHaveProperty("price");
     expect(typeof res.body.price).toBe("number");
     expect(res.body).toHaveProperty("description");
@@ -74,6 +74,6 @@ describe("POST /product/create", () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors[0].msg).toEqual("Product name is required");
+    expect(res.body.errors[0].msg).toEqual("Name is required");
   });
 });

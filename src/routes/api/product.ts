@@ -4,5 +4,6 @@ import productController from "../../controllers/product";
 
 product.get("/all", productController.getAllProducts);
 product.get("/:id", productController.getProduct);
+product.post("/create", productController.addProduct);
 
 export = product;
