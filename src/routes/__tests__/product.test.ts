@@ -14,3 +14,12 @@ beforeAll(async () => {
 afterAll(async () => {
   mongoose.connection.close();
 });
+
+// Test test
+describe("GET /product", () => {
+  it("product test route", async () => {
+    const res = await request(app).get("/product");
+
+    expect(res.statusCode).toEqual(200);
+  });
+});
