@@ -47,3 +47,33 @@ describe("GET /product/:id", () => {
     expect(res.body.errors[0].msg).toEqual("Invalid product id");
   });
 });
+
+// PRODUCT POST ROUTES
+describe("POST /product/create", () => {
+  it("return created product", async () => {
+    const res = await request(app).post("/product/create").send({
+      name: "New product",
+      price: 38,
+      description: "Description for the new product",
+    });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("title");
+    expect(res.body.title).toEqual("New product");
+    expect(res.body).toHaveProperty("price");
+    expect(typeof res.body.price).toBe("number");
+    expect(res.body).toHaveProperty("description");
+  });
+
+  it("return error for missing required field", async () => {
+    const res = await request(app).post("/product/create").send({
+      name: "",
+      price: 13,
+      description: "My name is missing",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Product name is required");
+  });
+});
