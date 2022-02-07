@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const cart = express.Router();
+import cartController from "../../controllers/cart";
 
-cart.get("/", async (req: Request, res: Response, next: NextFunction) =>
-  res.send("Cart GET test")
-);
+cart.get("/", cartController.getAllCarts);
 
 export = cart;

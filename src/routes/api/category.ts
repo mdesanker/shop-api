@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const category = express.Router();
+import categoryController from "../../controllers/category";
 
-category.get("/", async (req: Request, res: Response, next: NextFunction) =>
-  res.send("Category GET test")
-);
+category.get("/", categoryController.getAllCategories);
 
 export = category;

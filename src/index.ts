@@ -25,7 +25,7 @@ app.use(express.json());
 app.use("/auth", auth);
 app.use("/cart", cart);
 app.use("/category", category);
-app.use("/products", product);
+app.use("/product", product);
 app.use("/user", user);
 
 app.get("/", async (req: Request, res: Response) => {

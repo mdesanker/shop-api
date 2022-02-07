@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const product = express.Router();
+import productController from "../../controllers/product";
 
-product.get("/", async (req: Request, res: Response, next: NextFunction) =>
-  res.send("Product GET test")
-);
+product.get("/", productController.getAllProducts);
 
 export = product;

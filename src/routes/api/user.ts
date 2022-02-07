@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const user = express.Router();
+import userController from "../../controllers/user";
 
-user.get("/", async (req: Request, res: Response, next: NextFunction) =>
-  res.send("User GET test")
-);
+user.get("/", userController.getAllUsers);
 
 export = user;

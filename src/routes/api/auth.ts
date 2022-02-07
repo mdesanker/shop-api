@@ -1,8 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const auth = express.Router();
+import authController from "../../controllers/auth";
 
-auth.get("/", async (req: Request, res: Response, next: NextFunction) =>
-  res.send("Auth GET test")
-);
+auth.get("/", authController.getAllUsers);
 
 export = auth;
