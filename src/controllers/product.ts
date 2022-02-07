@@ -6,7 +6,16 @@ const getAllProducts = async (
   res: Response,
   next: NextFunction
 ) => {
-  res.send("Product GET controller test");
+  try {
+    const products = await Product.find({}).populate("category");
+
+    res.json(products);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      return res.status(500).send("Server error");
+    }
+  }
 };
 
 export default { getAllProducts };
