@@ -1,7 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 const Schema = mongoose.Schema;
 
-const ProductSchema = new Schema({
+interface Product {
+  name: string;
+  price: number;
+  description: string;
+  images?: string[];
+  category?: Types.ObjectId;
+}
+
+const ProductSchema = new Schema<Product>({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },
