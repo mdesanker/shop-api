@@ -4,24 +4,25 @@ import mongoose from "mongoose";
 import initializeMongoServer from "../../config/mongoConfigTesting";
 import seedDB from "./seed";
 
-// Global variables
+// GLOBAL VARIABLES
 
-// Pre-test
+// PRE-TEST
 beforeAll(async () => {
   await initializeMongoServer();
   await seedDB();
 });
 
-// Post-test
+// POST-TEST
 afterAll(async () => {
   mongoose.connection.close();
 });
 
-// Test test
-describe("GET /product", () => {
-  it("product test route", async () => {
-    const res = await request(app).get("/product");
+// PRODUCT GET ROUTES
+describe("GET /product/all", () => {
+  it("return array of all products", async () => {
+    const res = await request(app).get("/product/all");
 
     expect(res.statusCode).toEqual(200);
+    expect(Array.isArray(res.body)).toBe(true);
   });
 });
