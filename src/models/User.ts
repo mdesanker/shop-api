@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+const findOrCreate = require("mongoose-findorcreate");
 
 export interface UserTypes {
   name: {
@@ -20,5 +21,7 @@ const UserSchema = new Schema<UserTypes>({
   password: { type: String, required: true },
   picture: { type: String },
 });
+
+UserSchema.plugin(findOrCreate);
 
 export default mongoose.model("User", UserSchema);
