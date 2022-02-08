@@ -16,6 +16,7 @@ auth.get("/failed", (req: Request, res: Response) => {
 });
 
 auth.get("/success", (req: AuthRequest, res: Response) => {
+  console.log(req.user);
   res.send(`Welcome ${req.user && req.user._json.email}`);
 });
 
@@ -37,5 +38,10 @@ auth.get(
     // res.send("You are logged in")
   }
 );
+
+auth.get("/logout", async (req: Request, res: Response) => {
+  req.logout();
+  res.redirect("/");
+});
 
 export = auth;

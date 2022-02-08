@@ -17,7 +17,7 @@ export default () => {
         callbackURL: "/auth/google/redirect",
       },
       (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
+        // console.log(profile);
         User.findOrCreate(
           { googleId: profile.id },
           {
