@@ -4,6 +4,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 import connectDB from "./config/mongoConfig";
 import googleStrategy from "./config/googleStrategy";
+import passport from "passport";
+import session from "express-session";
 
 googleStrategy();
 
@@ -24,6 +26,17 @@ connectDB();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 8 },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/auth", auth);
 app.use("/cart", cart);
