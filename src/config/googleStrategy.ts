@@ -26,7 +26,6 @@ export default () => {
               lastName: profile._json.family_name,
             },
             email: profile._json.email,
-            password: "password",
             picture: profile._json.picture,
           },
           function (err: any, user: any) {

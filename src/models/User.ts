@@ -8,7 +8,7 @@ export interface IUser {
     lastName: string;
   };
   email: string;
-  password: string;
+  password?: string;
   picture?: string;
 }
 
@@ -22,7 +22,7 @@ const UserSchema = new Schema<IUser, UserModel>({
     lastName: { type: String, required: true },
   },
   email: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String },
   picture: { type: String },
 });
 
