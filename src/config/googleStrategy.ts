@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import User from "../models/User";
+import User, { IUser } from "../models/User";
 
 interface GoogleStrategyTypes {
   clientID: string;
@@ -18,12 +18,21 @@ export default () => {
       },
       (accessToken, refreshToken, profile, done) => {
         console.log(profile);
-        return done(null, profile);
-        // console.log(accessToken);
-        // console.log(profile);
-        // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        //   return done(err, profile);
-        // })
+        User.findOrCreate(
+          { googleId: profile.id },
+          {
+            name: {
+              firstName: profile._json.given_name,
+              lastName: profile._json.family_name,
+            },
+            email: profile._json.email,
+            password: "password",
+            picture: profile._json.picture,
+          },
+          function (err: any, user: any) {
+            return done(err, profile);
+          }
+        );
       }
     )
   );

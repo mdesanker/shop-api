@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 
-import Product, { ProductTypes } from "../models/Product";
+import Product, { IProduct } from "../models/Product";
 
 const getAllProducts = async (
   req: Request,
@@ -59,7 +59,7 @@ const addProduct = [
       // Create new product
       const { name, price, description } = req.body;
 
-      const product = new Product<ProductTypes>({
+      const product = new Product<IProduct>({
         name,
         price,
         description,
