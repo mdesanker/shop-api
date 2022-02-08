@@ -3,6 +3,10 @@ import passport from "passport";
 const auth = express.Router();
 import authController from "../../controllers/auth";
 
+interface AuthRequest extends Request {
+  user?: any;
+}
+
 auth.get("/", (req: Request, res: Response) => {
   res.json({ msg: "You are not logged in" });
 });
@@ -11,7 +15,7 @@ auth.get("/failed", (req: Request, res: Response) => {
   res.json({ msg: "Failed" });
 });
 
-auth.get("/success", (req: Request, res: Response) => {
+auth.get("/success", (req: AuthRequest, res: Response) => {
   console.log(req);
   res.send(`Welcome ${req.user && req.user._json.email}`);
 });
