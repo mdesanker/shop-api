@@ -27,6 +27,7 @@ export default () => {
             },
             email: profile._json.email,
             picture: profile._json.picture,
+            googleId: profile._json.sub,
           },
           function (err: any, user: any) {
             return done(err, profile);

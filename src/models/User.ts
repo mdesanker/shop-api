@@ -10,6 +10,7 @@ export interface IUser {
   email: string;
   password?: string;
   picture?: string;
+  googleId?: string;
 }
 
 interface UserModel extends Model<IUser> {
@@ -24,6 +25,7 @@ const UserSchema = new Schema<IUser, UserModel>({
   email: { type: String, required: true },
   password: { type: String },
   picture: { type: String },
+  googleId: { type: String },
 });
 
 UserSchema.plugin(findOrCreate);
