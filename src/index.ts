@@ -3,9 +3,9 @@ import express, { Request, Response } from "express";
 const cors = require("cors");
 const helmet = require("helmet");
 import connectDB from "./config/mongoConfig";
-import googleAuth from "./config/googleAuth";
+import googleStrategy from "./config/googleStrategy";
 
-googleAuth();
+googleStrategy();
 
 // Routes
 import auth from "./routes/api/auth";
