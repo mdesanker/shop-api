@@ -9,7 +9,7 @@ export interface IUser {
   };
   email: string;
   password?: string;
-  picture?: string;
+  avatar?: string;
   googleId?: string;
 }
 
@@ -18,14 +18,14 @@ interface UserModel extends Model<IUser> {
 }
 
 const UserSchema = new Schema<IUser, UserModel>({
+  googleId: { type: String },
   name: {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
   },
   email: { type: String, required: true },
   password: { type: String },
-  picture: { type: String },
-  googleId: { type: String },
+  avatar: { type: String },
 });
 
 UserSchema.plugin(findOrCreate);

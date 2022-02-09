@@ -1,42 +1,34 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import User, { IUser } from "../models/User";
+import User from "../models/User";
 
-interface GoogleStrategyTypes {
-  clientID: string;
-  clientSecret: string;
-  callbackURL: string;
-}
-
-export default () => {
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.CLIENT_ID as string,
-        clientSecret: process.env.CLIENT_SECRET as string,
-        callbackURL: "/auth/google/redirect",
-      },
-      (accessToken, refreshToken, profile, done) => {
-        // console.log(profile);
-        User.findOrCreate(
-          { googleId: profile.id },
-          {
-            name: {
-              firstName: profile._json.given_name,
-              lastName: profile._json.family_name,
-            },
-            email: profile._json.email,
-            picture: profile._json.picture,
-            googleId: profile._json.sub,
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.CLIENT_ID as string,
+      clientSecret: process.env.CLIENT_SECRET as string,
+      callbackURL: process.env.CALLBACK_URL as string,
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // console.log(profile);
+      User.findOrCreate(
+        { googleId: profile.id },
+        {
+          name: {
+            firstName: profile._json.given_name,
+            lastName: profile._json.family_name,
           },
-          function (err: any, user: any) {
-            return done(err, profile);
-          }
-        );
-      }
-    )
-  );
-};
+          email: profile._json.email,
+          avatar: profile._json.picture,
+          googleId: profile._json.sub,
+        },
+        function (err: any, user: any) {
+          return done(err, profile);
+        }
+      );
+    }
+  )
+);
 
 passport.serializeUser(function (user, done) {
   done(null, user);

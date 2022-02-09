@@ -3,11 +3,8 @@ import express, { Request, Response } from "express";
 const cors = require("cors");
 const helmet = require("helmet");
 import connectDB from "./config/mongoConfig";
-import googleStrategy from "./config/googleStrategy";
 import passport from "passport";
 import session from "express-session";
-
-googleStrategy();
 
 // Routes
 import auth from "./routes/api/auth";
@@ -37,6 +34,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+require("./config/googleStrategy");
 
 app.use("/auth", auth);
 app.use("/cart", cart);
