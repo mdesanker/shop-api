@@ -16,8 +16,9 @@ auth.get("/failed", (req: Request, res: Response) => {
 });
 
 auth.get("/success", (req: AuthRequest, res: Response) => {
-  console.log(req.user);
-  res.send(`Welcome ${req.user && req.user._json.email}`);
+  console.log("USER IN REQUEST", req.user);
+  res.send(`Welcome ${req.user && req.user.email}`);
+  // res.send("Welcome");
 });
 
 auth.get(
