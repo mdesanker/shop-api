@@ -1,6 +1,5 @@
 import mongoose, { Document, Model } from "mongoose";
 const Schema = mongoose.Schema;
-const findOrCreate = require("mongoose-findorcreate");
 
 export interface IUser {
   name: {
@@ -13,11 +12,7 @@ export interface IUser {
   googleId?: string;
 }
 
-interface UserModel extends Model<IUser> {
-  findOrCreate(id?: any, newUser?: any, cb?: any): any;
-}
-
-const UserSchema = new Schema<IUser, UserModel>({
+const UserSchema = new Schema<IUser>({
   googleId: { type: String },
   name: {
     firstName: { type: String, required: true },
@@ -28,6 +23,4 @@ const UserSchema = new Schema<IUser, UserModel>({
   avatar: { type: String },
 });
 
-UserSchema.plugin(findOrCreate);
-
-export default mongoose.model<IUser, UserModel>("User", UserSchema);
+export default mongoose.model<IUser>("User", UserSchema);

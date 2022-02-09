@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import passport from "passport";
 const auth = express.Router();
 import authController from "../../controllers/auth";
+import requireGoogleAuth from "../../middleware/requireGoogleAuth";
 
 interface AuthRequest extends Request {
   user?: any;
@@ -16,7 +17,6 @@ auth.get("/failed", (req: Request, res: Response) => {
 });
 
 auth.get("/success", (req: AuthRequest, res: Response) => {
-  console.log("USER IN REQUEST", req.user);
   res.send(`Welcome ${req.user && req.user.email}`);
   // res.send("Welcome");
 });
@@ -44,5 +44,9 @@ auth.get("/logout", async (req: Request, res: Response) => {
   req.logout();
   res.redirect("/");
 });
+
+auth.get("/test", requireGoogleAuth, async (req: Request, res: Response) =>
+  res.send("This is a protected route")
+);
 
 export = auth;
