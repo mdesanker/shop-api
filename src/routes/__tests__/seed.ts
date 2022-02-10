@@ -25,6 +25,16 @@ const generateSpecificCategory = () => {
   categories.push(category);
 };
 
+const generateSecondCategory = () => {
+  const category = new Category({
+    _id: "62054d165b6ab15439227197",
+    name: "Apparel",
+    description: faker.lorem.sentence(),
+  });
+
+  categories.push(category);
+};
+
 // PRODUCTS
 
 const generateProduct = () => {
@@ -69,6 +79,7 @@ const seedDB = async () => {
   // Generate specifics
   generateSpecificProduct();
   generateSpecificCategory();
+  generateSecondCategory();
 
   // Add 3 of things
   for (let i = 0; i < 3; i++) {

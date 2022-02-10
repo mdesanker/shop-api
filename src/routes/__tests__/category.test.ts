@@ -85,3 +85,56 @@ describe("POST /category/create", () => {
     expect(res.body.errors[0].msg).toEqual("Name is required");
   });
 });
+
+// PUT ROUTES
+describe("PUT /category/:id/update", () => {
+  it("return updated category", async () => {
+    const res = await request(app).put(`/category/${categoryId}/update`).send({
+      name: "Mobile",
+      description: "Phones and tablets",
+    });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("name");
+    expect(res.body.name).toEqual("Mobile");
+    expect(res.body).toHaveProperty("description");
+    expect(res.body.description).toEqual("Phones and tablets");
+  });
+
+  it("return error if category name already used", async () => {
+    const res = await request(app).put(`/category/${categoryId}/update`).send({
+      name: "Apparel",
+      description: "Clothes galore",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual(
+      "A category with this name already exists"
+    );
+  });
+
+  it("return error if category name missing", async () => {
+    const res = await request(app).put(`/category/${categoryId}/update`).send({
+      name: "",
+      description: "The name is missing",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Name is required");
+  });
+
+  it("return error for invalid category id", async () => {
+    const res = await request(app)
+      .put(`/category/${invalidCategoryId}/update`)
+      .send({
+        name: "Invalid id",
+        description: "The name is missing",
+      });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Invalid category id");
+  });
+});
