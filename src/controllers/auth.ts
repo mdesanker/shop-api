@@ -49,6 +49,11 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
   res.redirect("/");
 };
 
+const testRoute = async (req: Request, res: Response) => {
+  console.log("TEST ROUTE USER", req.user);
+  res.json({ msg: "Test route" });
+};
+
 export default {
   getAllUsers,
   signinFailed,
@@ -56,4 +61,5 @@ export default {
   googleAuthenticate,
   googleRedirect,
   logout,
+  testRoute,
 };

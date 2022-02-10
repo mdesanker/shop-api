@@ -7,5 +7,6 @@ auth.get("/success", authController.signinSuccessful);
 auth.get("/google", authController.googleAuthenticate);
 auth.get("/google/redirect", authController.googleRedirect);
 auth.get("/logout", authController.logout);
+auth.get("/test", authController.testRoute);
 
 export = auth;
