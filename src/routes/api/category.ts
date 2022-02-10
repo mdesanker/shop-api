@@ -6,5 +6,6 @@ category.get("/all", categoryController.getAllCategories);
 category.get("/:id", categoryController.getCategory);
 category.post("/create", categoryController.addCategory);
 category.put("/:id/update", categoryController.updateCategory);
+category.delete("/:id/delete", categoryController.deleteCategory);
 
 export = category;

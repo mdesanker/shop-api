@@ -134,4 +134,36 @@ const updateCategory = [
   },
 ];
 
-export default { getAllCategories, getCategory, addCategory, updateCategory };
+const deleteCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    // Check id valid
+    const category = await Category.findById(id);
+
+    if (!category) {
+      return res.status(400).json({ errors: [{ msg: "Invalid category id" }] });
+    }
+
+    // Delete category
+    await Category.findByIdAndRemove(id);
+
+    res.json({ msg: "Category deleted" });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return res.status(500).send("Server error");
+    }
+  }
+};
+
+export default {
+  getAllCategories,
+  getCategory,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+};
