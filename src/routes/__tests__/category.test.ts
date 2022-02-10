@@ -140,3 +140,24 @@ describe("PUT /category/:id/update", () => {
     expect(res.body.errors[0].msg).toEqual("Invalid category id");
   });
 });
+
+// DELETE ROUTES
+describe("DELETE /category/:id/delete", () => {
+  it("return msg saying category deleted", async () => {
+    const res = await request(app).delete(`/category/${categoryId}/delete`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("msg");
+    expect(res.body.msg).toEqual("Category deleted");
+  });
+
+  it("return error for invalid category id", async () => {
+    const res = await request(app).delete(
+      `/category/${invalidCategoryId}/delete`
+    );
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Invalid category id");
+  });
+});

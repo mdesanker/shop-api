@@ -69,7 +69,7 @@ const addCategory = [
       });
 
       const newDocument = await category.save();
-      console.log(newDocument);
+
       res.json(newDocument);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -95,7 +95,6 @@ const updateCategory = [
     try {
       const { id } = req.params;
       const { name, description } = req.body;
-      console.log(req.body);
 
       // Find existing category
       const category = await Category.findById(id);
