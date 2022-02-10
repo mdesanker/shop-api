@@ -27,3 +27,13 @@ describe("GET /category", () => {
     expect(res.statusCode).toEqual(200);
   });
 });
+
+// GET ROUTES
+describe("GET /category/all", () => {
+  it("return array of all categories", async () => {
+    const res = await request(app).get("/category/all");
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+});
