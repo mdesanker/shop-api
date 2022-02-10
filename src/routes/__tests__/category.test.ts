@@ -45,3 +45,43 @@ describe("GET /category/:id", () => {
     expect(res.body.errors[0].msg).toEqual("Invalid category id");
   });
 });
+
+// POST ROUTES
+describe("POST /category/create", () => {
+  it("return newly created category", async () => {
+    const res = await request(app).post("/category/create").send({
+      name: "Electronics",
+      description: "Gidgets and gadgets",
+    });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("name");
+    expect(res.body.name).toEqual("Electronics");
+    expect(res.body).toHaveProperty("description");
+    expect(res.body.description).toEqual("Gidgets and gadgets");
+  });
+
+  it("return error if category name already used", async () => {
+    const res = await request(app).post("/category/create").send({
+      name: "Electronics",
+      description: "Gadgets or gidgets",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual(
+      "A category with this name already exists"
+    );
+  });
+
+  it("return error if category name missing", async () => {
+    const res = await request(app).post("/category/create").send({
+      name: "",
+      description: "A shoe for every foot",
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Name is required");
+  });
+});
