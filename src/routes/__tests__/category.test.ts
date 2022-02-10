@@ -95,6 +95,8 @@ describe("PUT /category/:id/update", () => {
     });
 
     expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("_id");
+    expect(res.body._id).toEqual(categoryId);
     expect(res.body).toHaveProperty("name");
     expect(res.body.name).toEqual("Mobile");
     expect(res.body).toHaveProperty("description");
