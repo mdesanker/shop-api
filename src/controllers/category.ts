@@ -6,7 +6,15 @@ const getAllCategories = async (
   res: Response,
   next: NextFunction
 ) => {
-  res.send("Category GET controller test");
+  try {
+    const categories = await Category.find({});
+
+    res.json(categories);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      res.status(500).send("Server error");
+    }
+  }
 };
 
 export default { getAllCategories };

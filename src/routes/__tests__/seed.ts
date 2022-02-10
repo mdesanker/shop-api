@@ -94,8 +94,8 @@ const seedDB = async () => {
     }
   }
 
-  console.log(categories);
-  console.log(products);
+  // console.log(categories);
+  // console.log(products);
   return { products };
 };
 

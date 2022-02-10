@@ -19,15 +19,6 @@ afterAll(async () => {
   mongoose.connection.close();
 });
 
-// Test test
-describe("GET /category", () => {
-  it("category test route", async () => {
-    const res = await request(app).get("/category");
-
-    expect(res.statusCode).toEqual(200);
-  });
-});
-
 // GET ROUTES
 describe("GET /category/all", () => {
   it("return array of all categories", async () => {
