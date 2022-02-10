@@ -43,10 +43,12 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, done) {
-  done(null, user);
+passport.serializeUser(function (user: any, done) {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function (user: any, done) {
-  done(null, user);
+passport.deserializeUser(function (id: string, done) {
+  User.findById(id).then((user) => {
+    done(null, user);
+  });
 });
