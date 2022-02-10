@@ -79,4 +79,60 @@ const addCategory = [
   },
 ];
 
-export default { getAllCategories, getCategory, addCategory };
+const updateCategory = [
+  // Validate and sanitize input
+  check("name", "Name is required").trim().notEmpty(),
+  check("description").trim(),
+
+  // Process input
+  async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const { id } = req.params;
+      const { name, description } = req.body;
+      console.log(req.body);
+
+      // Find existing category
+      const category = await Category.findById(id);
+
+      if (!category) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid category id" }] });
+      }
+
+      // Check new name available
+      const existingName = await Category.findOne({ name });
+
+      if (existingName) {
+        return res.status(400).json({
+          errors: [{ msg: "A category with this name already exists" }],
+        });
+      }
+
+      // Create new category
+      const newCategory = new Category({
+        _id: id,
+        name,
+        description,
+      });
+
+      const newDocument = await Category.findByIdAndUpdate(id, newCategory, {
+        new: true,
+      });
+
+      res.json(newDocument);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return res.status(500).send("Server error");
+      }
+    }
+  },
+];
+
+export default { getAllCategories, getCategory, addCategory, updateCategory };
