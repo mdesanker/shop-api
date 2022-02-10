@@ -146,9 +146,14 @@ describe("DELETE /category/:id/delete", () => {
   it("return msg saying category deleted", async () => {
     const res = await request(app).delete(`/category/${categoryId}/delete`);
 
+    const check = await request(app).get(`/category/${categoryId}`);
+
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty("msg");
     expect(res.body.msg).toEqual("Category deleted");
+    expect(check.statusCode).toEqual(400);
+    expect(check.body).toHaveProperty("errors");
+    expect(check.body.errors[0].msg).toEqual("Invalid category id");
   });
 
   it("return error for invalid category id", async () => {
