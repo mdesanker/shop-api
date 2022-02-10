@@ -2,12 +2,16 @@ import app from "./index";
 import request from "supertest";
 import mongoose from "mongoose";
 import initializeMongoServer from "../../config/mongoConfigTesting";
+import seedDB from "./seed";
 
 // Global variables
+const categoryId = "62054d165b6ab15439227791";
+const invalidCategoryId = "62054d165b6ab15439200000";
 
 // Pre-test
 beforeAll(async () => {
   await initializeMongoServer();
+  await seedDB();
 });
 
 // Post-test
