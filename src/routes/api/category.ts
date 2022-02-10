@@ -4,5 +4,6 @@ import categoryController from "../../controllers/category";
 
 category.get("/all", categoryController.getAllCategories);
 category.get("/:id", categoryController.getCategory);
+category.post("/create", categoryController.addCategory);
 
 export = category;
