@@ -26,10 +26,10 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: process.env.SESSION_KEY as string,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 8 },
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
   })
 );
 app.use(passport.initialize());
