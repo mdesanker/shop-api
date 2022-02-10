@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Category from "../models/Category";
+import Category, { ICategory } from "../models/Category";
 import { check, validationResult } from "express-validator";
 
 const getAllCategories = async (
@@ -63,7 +63,7 @@ const addCategory = [
       }
 
       // Create new category
-      const category = new Category({
+      const category = new Category<ICategory>({
         name,
         description,
       });
@@ -116,7 +116,7 @@ const updateCategory = [
       }
 
       // Create new category
-      const newCategory = new Category({
+      const newCategory = new Category<ICategory>({
         _id: id,
         name,
         description,

@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const CategorySchema = new Schema({
+export interface ICategory {
+  _id?: string;
+  name: string;
+  description?: string;
+}
+
+const CategorySchema = new Schema<ICategory>({
   name: { type: String, unique: true, required: true },
   description: { type: String },
 });
