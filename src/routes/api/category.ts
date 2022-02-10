@@ -3,5 +3,6 @@ const category = express.Router();
 import categoryController from "../../controllers/category";
 
 category.get("/all", categoryController.getAllCategories);
+category.get("/:id", categoryController.getCategory);
 
 export = category;
