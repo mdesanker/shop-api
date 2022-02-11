@@ -145,6 +145,6 @@ describe("PUT /product/:id", () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty("errors");
-    expect(res.body.errors[0].msg).toEqual("Invalid category id");
+    expect(res.body.errors[0].msg).toEqual("Invalid product id");
   });
 });

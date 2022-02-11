@@ -2,6 +2,7 @@ import mongoose, { Types } from "mongoose";
 const Schema = mongoose.Schema;
 
 export interface IProduct {
+  _id?: string;
   name: string;
   price: number;
   description: string;
