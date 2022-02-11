@@ -66,7 +66,7 @@ const generateClothingProduct = () => {
   const product = new Product({
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
-    description: faker.commerce.productDescription,
+    description: faker.commerce.productDescription(),
     images: [faker.image.imageUrl()],
     category: "62054d165b6ab15439227791", // Clothing category
   });

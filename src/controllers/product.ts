@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
+import Category from "../models/Category";
 
 import Product, { IProduct } from "../models/Product";
 
@@ -24,7 +25,7 @@ const getProduct = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
 
   try {
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("category");
 
     // Invalid product id
     if (!product) {
@@ -35,6 +36,32 @@ const getProduct = async (req: Request, res: Response, next: NextFunction) => {
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error(err.message);
+      return res.status(500).send("Server error");
+    }
+  }
+};
+
+const getCategoryProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    // Check id is valid
+    const category = await Category.findById(id);
+
+    if (!category) {
+      return res.status(400).json({ errors: [{ msg: "Invalid category id" }] });
+    }
+
+    // Get products
+    const products = await Product.find({ category: id }).populate("category");
+
+    res.json(products);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
       return res.status(500).send("Server error");
     }
   }
@@ -77,4 +104,4 @@ const addProduct = [
   },
 ];
 
-export default { getAllProducts, getProduct, addProduct };
+export default { getAllProducts, getProduct, getCategoryProducts, addProduct };
