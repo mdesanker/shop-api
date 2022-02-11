@@ -7,5 +7,6 @@ product.get("/:id", productController.getProduct);
 product.get("/category/:id", productController.getCategoryProducts);
 product.post("/create", productController.addProduct);
 product.put("/:id", productController.updateProduct);
+product.delete("/:id", productController.deleteProduct);
 
 export = product;

@@ -183,10 +183,37 @@ const updateProduct = [
   },
 ];
 
+const deleteProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    // Check id is valid
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(400).json({ errors: [{ msg: "Invalid product id" }] });
+    }
+
+    // Delete product
+    await Product.findByIdAndRemove(id);
+
+    res.json({ msg: "Product deleted" });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return res.status(500).send("Server error");
+    }
+  }
+};
+
 export default {
   getAllProducts,
   getProduct,
   getCategoryProducts,
   addProduct,
   updateProduct,
+  deleteProduct,
 };
