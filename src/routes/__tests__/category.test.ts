@@ -87,9 +87,9 @@ describe("POST /category/create", () => {
 });
 
 // PUT ROUTES
-describe("PUT /category/:id/update", () => {
+describe("PUT /category/:id", () => {
   it("return updated category", async () => {
-    const res = await request(app).put(`/category/${categoryId}/update`).send({
+    const res = await request(app).put(`/category/${categoryId}`).send({
       name: "Mobile",
       description: "Phones and tablets",
     });
@@ -104,7 +104,7 @@ describe("PUT /category/:id/update", () => {
   });
 
   it("return error if category name already used", async () => {
-    const res = await request(app).put(`/category/${categoryId}/update`).send({
+    const res = await request(app).put(`/category/${categoryId}`).send({
       name: "Apparel",
       description: "Clothes galore",
     });
@@ -117,7 +117,7 @@ describe("PUT /category/:id/update", () => {
   });
 
   it("return error if category name missing", async () => {
-    const res = await request(app).put(`/category/${categoryId}/update`).send({
+    const res = await request(app).put(`/category/${categoryId}`).send({
       name: "",
       description: "The name is missing",
     });
@@ -128,12 +128,10 @@ describe("PUT /category/:id/update", () => {
   });
 
   it("return error for invalid category id", async () => {
-    const res = await request(app)
-      .put(`/category/${invalidCategoryId}/update`)
-      .send({
-        name: "Invalid id",
-        description: "The name is missing",
-      });
+    const res = await request(app).put(`/category/${invalidCategoryId}`).send({
+      name: "Invalid id",
+      description: "The name is missing",
+    });
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty("errors");
@@ -142,9 +140,9 @@ describe("PUT /category/:id/update", () => {
 });
 
 // DELETE ROUTES
-describe("DELETE /category/:id/delete", () => {
+describe("DELETE /category/:id", () => {
   it("return msg saying category deleted", async () => {
-    const res = await request(app).delete(`/category/${categoryId}/delete`);
+    const res = await request(app).delete(`/category/${categoryId}`);
 
     const check = await request(app).get(`/category/${categoryId}`);
 
@@ -157,9 +155,7 @@ describe("DELETE /category/:id/delete", () => {
   });
 
   it("return error for invalid category id", async () => {
-    const res = await request(app).delete(
-      `/category/${invalidCategoryId}/delete`
-    );
+    const res = await request(app).delete(`/category/${invalidCategoryId}`);
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty("errors");

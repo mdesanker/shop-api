@@ -4,7 +4,7 @@
   "description": "REST API for an e-commerce store",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest ./src/routes/__tests__/product.test.ts  --testTimeout=10000 --detectOpenHandles --forceExit",
+    "test": "NODE_ENV=test jest ./src/routes/__tests__/category.test.ts  --testTimeout=10000 --detectOpenHandles --forceExit",
     "devstart": "npx nodemon src/index.ts",
     "serverstart": "DEBUG=shop-api:* npm run devstart"
   },
