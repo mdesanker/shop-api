@@ -7,6 +7,8 @@ import seedDB from "./seed";
 // GLOBAL VARIABLES
 const productId = "62017133d314aff5da2f2d6c";
 const invalidProductId = "62017133d314aff5da200000";
+const categoryId = "62054d165b6ab15439227791";
+const invalidCategoryId = "62054d165b6ab15439200000";
 
 // PRE-TEST
 beforeAll(async () => {
@@ -26,6 +28,7 @@ describe("GET /product/all", () => {
 
     expect(res.statusCode).toEqual(200);
     expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
   });
 });
 
@@ -41,6 +44,26 @@ describe("GET /product/:id", () => {
 
   it("return error for invalid id", async () => {
     const res = await request(app).get(`/product/${invalidProductId}`);
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Invalid product id");
+  });
+});
+
+describe("GET /product/category/:id", () => {
+  it("return all products for specific category", async () => {
+    const res = await request(app).get(`/product/category/${categoryId}`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  it("return error for invalid category id", async () => {
+    const res = await request(app).get(
+      `/product/category/${invalidCategoryId}`
+    );
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty("errors");
