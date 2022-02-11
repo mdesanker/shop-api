@@ -25,7 +25,9 @@ afterAll(async () => {
 describe("POST /local/register", () => {
   it("return registered user", async () => {
     const res = await request(app).post("/local/register").send({
-      username: "mdank",
+      firstName: "Mike",
+      lastName: "Dank",
+      email: "mdank@user.net",
       password: "password",
     });
 
