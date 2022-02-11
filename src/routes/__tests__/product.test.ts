@@ -100,3 +100,51 @@ describe("POST /product/create", () => {
     expect(res.body.errors[0].msg).toEqual("Name is required");
   });
 });
+
+// PRODUCT PUT ROUTES
+describe("PUT /product/:id", () => {
+  it("return updated product", async () => {
+    const res = await request(app).put(`/product/${productId}`).send({
+      name: "Updated product name",
+      price: 22,
+      description: "Updated product description",
+      images: [],
+      category: categoryId,
+    });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("name");
+    expect(res.body.name).toEqual("Updated product name");
+    expect(res.body.price).toEqual(22);
+    expect(res.body.images.length).toEqual(0);
+    expect(res.body.category).not.toEqual(null);
+  });
+
+  it("return error if name missing", async () => {
+    const res = await request(app).put(`/product/${productId}`).send({
+      name: "",
+      price: 22,
+      description: "Product name is missing",
+      images: [],
+      category: categoryId,
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Name is required");
+  });
+
+  it("return error for invalid product id", async () => {
+    const res = await request(app).put(`/product/${invalidProductId}`).send({
+      name: "Wrong id",
+      price: 22,
+      description: "oops",
+      images: [],
+      category: null,
+    });
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Invalid category id");
+  });
+});
