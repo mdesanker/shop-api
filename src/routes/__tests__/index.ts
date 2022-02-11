@@ -11,6 +11,7 @@ import cart from "../api/cart";
 import category from "../api/category";
 import product from "../api/product";
 import user from "../api/user";
+import localAuth from "../api/localAuth";
 
 // Middleware
 app.use(express.json());
@@ -21,5 +22,6 @@ app.use("/cart", cart);
 app.use("/category", category);
 app.use("/product", product);
 app.use("/user", user);
+app.use("/local", localAuth);
 
 export = app;
