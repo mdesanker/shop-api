@@ -68,10 +68,21 @@ const getCategoryProducts = async (
 };
 
 const addProduct = [
+  // Convert images to array
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!(req.body.images instanceof Array)) {
+      if (typeof req.body.images === "undefined") req.body.images = [];
+      else req.body.images = new Array(req.body.images);
+    }
+    next();
+  },
+
   // Validate and sanitize input
   check("name", "Name is required").trim().notEmpty(),
-  check("price", "Price is required").trim().isNumeric().notEmpty(),
+  check("price", "Price is required").trim().isNumeric(),
   check("description", "Description is required").trim().notEmpty(),
+  check("images.*").trim(),
+  check("category").trim(),
 
   // Process input
   async (req: Request, res: Response, next: NextFunction) => {
@@ -84,17 +95,22 @@ const addProduct = [
 
     try {
       // Create new product
-      const { name, price, description } = req.body;
+      const { name, price, description, images, category } = req.body;
 
       const product = new Product<IProduct>({
         name,
         price,
         description,
+        images,
+        category: category ? category : null,
       });
 
-      await product.save();
+      const newProduct = await product.save();
 
-      return res.json(product);
+      // Populate category
+      await Product.populate(newProduct, { path: "category" });
+
+      return res.json(newProduct);
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message);
@@ -149,14 +165,14 @@ const updateProduct = [
         price,
         description,
         images,
-        category,
+        category: category ? category : null,
       });
 
       const updatedDocument = await Product.findByIdAndUpdate(
         id,
         updatedProduct,
         { new: true }
-      );
+      ).populate("category");
 
       res.json(updatedDocument);
     } catch (err: unknown) {

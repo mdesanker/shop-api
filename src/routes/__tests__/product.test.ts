@@ -78,6 +78,8 @@ describe("POST /product/create", () => {
       name: "New product",
       price: 38,
       description: "Description for the new product",
+      images: [],
+      category: categoryId,
     });
 
     expect(res.statusCode).toEqual(200);
