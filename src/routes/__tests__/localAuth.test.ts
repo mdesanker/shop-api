@@ -34,3 +34,14 @@ describe("POST /local/register", () => {
     expect(res.statusCode).toEqual(200);
   });
 });
+
+describe("POST /local/login", () => {
+  it("return logged in user", async () => {
+    const res = await request(app).post("/local/login").send({
+      email: "mdank@user.net",
+      password: "password",
+    });
+
+    expect(res.statusCode).toEqual(200);
+  });
+});

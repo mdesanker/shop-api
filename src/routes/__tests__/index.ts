@@ -1,4 +1,4 @@
-/* istanbul ifnore file */
+/* istanbul ignore file */
 
 import express, { urlencoded } from "express";
 

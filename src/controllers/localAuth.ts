@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 import User, { IUser } from "../models/User";
 import brcrypt from "bcryptjs";
+import passport from "passport";
 
 const register = [
   // Validate and sanitize input
@@ -44,4 +45,16 @@ const register = [
   },
 ];
 
-export default { register };
+const login = [
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log("Log in controller running...");
+    next();
+  },
+  passport.authenticate("local"),
+  async (req: Request, res: Response) => {
+    console.log("USER IN REQUEST BODY", req.user);
+    res.json(req.user);
+  },
+];
+
+export default { register, login };
