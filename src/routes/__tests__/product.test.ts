@@ -150,3 +150,27 @@ describe("PUT /product/:id", () => {
     expect(res.body.errors[0].msg).toEqual("Invalid product id");
   });
 });
+
+// PRODUCT DELETE ROUTES
+describe("DELETE /product/:id", () => {
+  it("return message confirming product delete", async () => {
+    const res = await request(app).delete(`/product/${productId}`);
+
+    const check = await request(app).get(`/product/${productId}`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("msg");
+    expect(res.body.msg).toEqual("Product deleted");
+    expect(check.statusCode).toEqual(400);
+    expect(check.body).toHaveProperty("errors");
+    expect(check.body.errors[0].msg).toEqual("Invalid product id");
+  });
+
+  it("return error for invalid product id", async () => {
+    const res = await request(app).delete(`/product/${invalidProductId}`);
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty("errors");
+    expect(res.body.errors[0].msg).toEqual("Invalid product id");
+  });
+});
