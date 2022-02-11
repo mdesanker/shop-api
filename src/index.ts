@@ -12,6 +12,7 @@ import cart from "./routes/api/cart";
 import category from "./routes/api/category";
 import product from "./routes/api/product";
 import user from "./routes/api/user";
+import localAuth from "./routes/api/localAuth";
 
 // Initialize app
 const app = express();
@@ -35,12 +36,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 require("./config/googleStrategy");
+require("./config/localStrategy");
 
 app.use("/auth", auth);
 app.use("/cart", cart);
 app.use("/category", category);
 app.use("/product", product);
 app.use("/user", user);
+app.use("/local", localAuth);
 
 app.get("/", async (req: Request, res: Response) => {
   return res.send("The Shop API");
