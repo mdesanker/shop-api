@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/mdesanker/shop-api#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
@@ -28,10 +29,12 @@
     "mongodb-memory-server": "^8.3.0",
     "mongoose": "^6.2.0",
     "passport": "^0.5.2",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.5",
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
@@ -40,6 +43,7 @@
     "@types/jest": "^27.4.0",
     "@types/passport": "^1.0.7",
     "@types/passport-google-oauth20": "^2.0.11",
+    "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.11",
     "jest": "^27.5.0",
     "nodemon": "^2.0.15",
